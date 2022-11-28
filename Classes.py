@@ -1,3 +1,7 @@
+import json
+import datetime
+
+
 #List of classes and methods for the Use case
 
 #Example:
@@ -71,7 +75,7 @@ class Contract:
        self
 
 class Quote:
-    def __init__(self, id, issue_date, cost, project, employee, send_quote, add_project):
+    def __init__(self, id, issue_date, cost, project, employee):
         self.id = id
         self.issue_date = issue_date
         self.cost = cost
@@ -96,25 +100,42 @@ class Project:
         self.progress = progress
         self.requirements = requirements
         self.stage_dates = [stage_dates]
-        items[Furniture]
+        self.items = items
         client(Client)
         proposal(Proposal)
-        quote(Quote)
-        contract(Contract)
+        self.quote = quote
+        self.contract = contract
         furniture(Contract)
         
     #Methods
-    def change_furniture_reserved(self):
-       self
+    def change_furniture_reserved():
+       date = input("Enter reserved date if the furniture:\n")
+       print(f'The reserved date of this furniture is: {date}')
+       date.append(Furniture.reserved_date)
        
-    def add_quote(self):
-       self
+    def add_quote():
+       newQuote = input("Enter the ID of the desired Quote:\n")
+       print(f'The ID of the desired Quote is: {newQuote}')
+       if hasattr(Quote, '_id'):
+           newQuote = Quote.id = Project.quote
+       else:
+           newQuote = Quote(newQuote)
        
-    def add_contract(self):
-       self
+       #if hasattr(Quote, "_id"):
+       #    return Quote._id
+           
+    def add_contract():
+       newContract = input("Enter the ID of the desired Contract:\n")
+       print(f'The ID of the desired Contract is: {newContract}')
+       if hasattr(Contract, '_id'):
+           newContract = Contract.id = Project.contract
+       else:
+           newContract = Contract(newContract)
        
-    def add_furniture(self):
-       self 
+    def add_furniture():
+       Furniture.id = input("Enter the ID of the desired Furniture:\n")
+       print(f'The ID of the desired Furniture is: {Furniture.id}')
+       Project.items.append(Furniture.id)
          
 class Proposal(Project):
     def __init__(self, id, description, floor, number_of_rooms_to_fill, residence_type, dates_available_for_visit, client, inquiry):
