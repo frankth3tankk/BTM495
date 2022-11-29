@@ -21,10 +21,10 @@ class Employee:
     def __init__(self, emp_id, emp_position, project, proposal, quote, contract):
         self.emp_id = emp_id
         self.emp_position = emp_position
-        project(Project)
-        proposal(Proposal)
-        quote[Quote]
-        contract[Contract]
+        self.project = project
+        self.proposal = proposal
+        self.quote = quote
+        self.contract = contract
       
     #Methods  
     def sign_contract(employee_signature):
@@ -35,10 +35,10 @@ class Client:
         self.id = id
         self.address = address
         self.type = type
-        project(Project)
-        inquiry[Inquiry]
-        quote[Quote]
-        contract[Contract]
+        self.project = project
+        self.inquiry = inquiry
+        self.quote = quote
+        self.contract = contract
               
     #Methods
     def sign_contract(self):
@@ -59,36 +59,55 @@ class Contract:
         self.id = id
         self.description = description
         self.release_state = release_state
-        employee_signature(Employee)
-        client_signature(Client)
-        project(Project)
-        quote(Quote)
+        self.employee_signature = employee_signature
+        self.client_signature = client_signature
+        self.project = project
+        self.quote = quote
         
     #Methods
     def send_contract(self):
-        self
+        contractID = input("Enter the desired contract to be sent to the client:\n")
+        Client.contract = input("Enter the desired Client ID\n")
+        print(f'This contract {contractID} will be sent to the client {Client.contract}')
+        if hasattr(Client, "_contract"):
+            contractID = self.id = Client.contract
+        else:
+            Client.contract = Client()
         
     def add_stage_date(self):
-       self 
-       
+       dates = input("Enter desired stage_dates:\n")
+       print(f'These dates {dates} will be added to the Project')
+       dates.append(Project.stage_dates)
+              
     def add_quote(self):
-       self
+       self.quote = Quote()
 
 class Quote:
     def __init__(self, id, issue_date, cost, project, employee):
         self.id = id
         self.issue_date = issue_date
         self.cost = cost
-        project(Project)
-        employee(Employee)
+        self.project = project
+        self.employee = employee
         
     #Methods
     def send_quote(self):
-       self 
+        quoteId = input("Enter the quote ID to send to the contract:\n")
+        Contract.quote = input("Enter the desired Contract ID\n")
+        print(f'This quote {quoteId} will be sent to the contract {Contract.quote}')
+        if hasattr(Contract, "_quote"):
+            quoteId = self.id = Contract.quote 
+        else:
+            Contract.quote = Contract()
        
     def add_project(self):
-       self
-        
+       addproject = input("Enter desired project ID to add to this quote:\n")
+       print(f'This project has been added to this quote: {addproject}')
+       if hasattr(Project, '_id'):
+           addproject = self.project = Project.id 
+       else:
+           addproject = Project(addproject)
+               
 class Project:       
     def __init__(self, id, design_details, design_sketch, description, status, feasibility, progress, requirements, stage_dates, items, client, proposal, quote, contract, furniture):
         self.id = id
@@ -101,11 +120,11 @@ class Project:
         self.requirements = requirements
         self.stage_dates = [stage_dates]
         self.items = items
-        client(Client)
-        proposal(Proposal)
+        self.client = client
+        self.proposal = proposal
         self.quote = quote
         self.contract = contract
-        furniture(Contract)
+        self.furniture = furniture
         
     #Methods
     def change_furniture_reserved():
@@ -113,22 +132,22 @@ class Project:
        print(f'The reserved date of this furniture is: {date}')
        date.append(Furniture.reserved_date)
        
-    def add_quote():
+    def add_quote(self):
        newQuote = input("Enter the ID of the desired Quote:\n")
        print(f'The ID of the desired Quote is: {newQuote}')
        if hasattr(Quote, '_id'):
-           newQuote = Quote.id = Project.quote
+           newQuote = Quote.id = self.quote
        else:
            newQuote = Quote(newQuote)
        
        #if hasattr(Quote, "_id"):
        #    return Quote._id
            
-    def add_contract():
+    def add_contract(self):
        newContract = input("Enter the ID of the desired Contract:\n")
        print(f'The ID of the desired Contract is: {newContract}')
        if hasattr(Contract, '_id'):
-           newContract = Contract.id = Project.contract
+           newContract = Contract.id = self.contract
        else:
            newContract = Contract(newContract)
        
@@ -145,12 +164,14 @@ class Proposal(Project):
         self.number_of_rooms_to_fill = number_of_rooms_to_fill
         self.residence_type = residence_type
         self.dates_available_for_visit = dates_available_for_visit
-        client(Client)
-        inquiry(Inquiry)
+        self.client = client
+        self.inquiry = inquiry
     
     #Methods    
     def modify_client_info(self):
-        self   
+        modInfo = input("Enter the revised Client information (Id, Adress, Type, Contract, Inquiry, Quote, Project): \n")
+        print(f'The revised Client information is: {modInfo}')
+        self.client = modInfo = Client()   
                           
 class Inquiry(Project):
     def __init__(self, id, date, description, street_name, house_number, city, province, client):
@@ -161,11 +182,13 @@ class Inquiry(Project):
         self.house_number = house_number
         self.city = city
         self.province = province
-        client(Client)
+        self.client = client
   
     #Methods
     def create_profile(self):
-        self
+        newClient = input("Enter the new Client information (Id, Adress, Type, Contract, Inquiry, Quote, Project): \n")
+        print(f'The new Client information is: {newClient}')
+        self.client = newClient = Client()
      
 class Furniture:    
     def __init__(self, id, reserved_date, name, picture, address, project):
@@ -174,7 +197,7 @@ class Furniture:
         self.name = name
         self.picture = picture
         self.address = address
-        project(Project)
+        self.project = project
          
     
     
