@@ -1,24 +1,19 @@
 import json
 import datetime
+import uuid
 
-
-#List of classes and methods for the Use case
-
-#Example:
-""" 
-class Student:
-    def __init__(self, name, student_number):
-        self.name = name
-        self.student_number = student_number
-        self.classes = []
-
-    def enrol(self, course_running):
-        self.classes.append(course_running)
-        course_running.add_student(self)
-"""
-
-class Employee:
-    def __init__(self, emp_id, emp_position, project, proposal, quote, contract):
+randomID = uuid.uuid4()
+#Classes and Methods
+class Person:
+    def __init__(self, firstname, lastname, phone_number, email):
+        self.firstname = firstname
+        self.lastname = lastname
+        self.phone_number = phone_number
+        self.email = email 
+        
+class Employee(Person):
+    def __init__(self, emp_id, emp_position, project, proposal, quote, contract, firstname, lastname, phone_number, email):
+        Person.__init__(self, firstname, lastname, phone_number, email) 
         self.emp_id = emp_id
         self.emp_position = emp_position
         self.project = project
@@ -28,10 +23,13 @@ class Employee:
       
     #Methods  
     def sign_contract(employee_signature):
-        Contract.append(employee_signature)
+        empSign = input("Please sign this contract:\n")
+        print(f'You have signed this contract with this signature: {empSign}')
+        empSign = Contract.employee_signature
         
-class Client:
-    def __init__(self, id, address, type, project, inquiry, quote, contract):
+class Client(Person):
+    def __init__(self, id, address, type, project, inquiry, quote, contract, firstname, lastname, phone_number, email):
+        Person.__init__(self, firstname, lastname, phone_number, email)
         self.id = id
         self.address = address
         self.type = type
@@ -41,19 +39,16 @@ class Client:
         self.contract = contract
               
     #Methods
-    def sign_contract(self):
-       self 
+    def sign_contract():
+        clientSign = input("Please sign this contract:\n")
+        print(f'You have signed this contract with this signature: {clientSign}')
+        clientSign = Contract.client_signature 
        
-    def generate_inquiry(self):
-       self
-            
-class Person:
-    def __init__(self, firstname, lastname, phone_number, email):
-        self.firstname = firstname
-        self.lastname = lastname
-        self.phone_number = phone_number
-        self.email = email 
-              
+    def generate_inquiry():
+        newInquiry = Inquiry() 
+        newInquiry.id = uuid.uuid4()
+        print("ID: " + uuid.uuid4())
+                    
 class Contract:
     def __init__(self, id, description, release_state, employee_signature, client_signature, project, quote):
         self.id = id
@@ -157,7 +152,7 @@ class Project:
        Project.items.append(Furniture.id)
          
 class Proposal(Project):
-    def __init__(self, id, description, floor, number_of_rooms_to_fill, residence_type, dates_available_for_visit, client, inquiry):
+    def __init__(self, id, description, floor, number_of_rooms_to_fill, residence_type, dates_available_for_visit,  client, inquiry):
         self.id = id
         self.description = description
         self.floor = floor
@@ -198,8 +193,39 @@ class Furniture:
         self.picture = picture
         self.address = address
         self.project = project
+ 
          
-    
+#Main function
+def main():
+    print("Welcome to Unique Home Solution!")
+    role = input("Please enter your role below (Client or Employee):\n")
+      
+    if (role == "Client"):
+        clientAction = input("To generate an inquiry type 'generate' or to sign a contract, please type 'sign':\n")
+        print(f'You have chosen to {clientAction}')
+        
+        match clientAction:
+            case "generate":
+                Client.generate_inquiry()
+                print("You have generated a new inquiry.")
+                
+            case "sign":
+                Client.sign_contract()
+                
+            case _:
+                print("Thank you for using our services! Have a nice day!")    
+                   
+        
+    elif (input == "Employee"):
+        employee = input({employee})
+        
+        
+            
+
+if __name__ == "__main__":
+    main()
+
+   
     
     
  
