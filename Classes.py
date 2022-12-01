@@ -1,8 +1,8 @@
 import json
 from json import JSONEncoder
-from json import jsonpickle
+import jsonpickle
 import datetime
-import uuid
+from os import path
 
 
 # randomID = uuid.uuid4()
@@ -41,6 +41,7 @@ class Employee(Person):
 
 
 class Client(Person):
+
     def __init__(self, id=None, address=None, type=None, project=None, inquiry=None, quote=None, contract=None,
                  firstname=None, lastname=None, phone_number=None, email=None):
         Person.__init__(self, firstname, lastname, phone_number, email)
@@ -200,17 +201,11 @@ class Project:
         newfur = input('Enter new furniture:\n')
         setattr(self, 'furniture', newfur)
 
-        #print(MyEncoder().encode(addFurniture))
+        frozen = jsonpickle.encode(addFurniture)
         with open('furniture.json', 'w') as outfile:
-            json.dump(addFurniture, outfile)
+            json.dump(frozen, outfile)
+        print(f'This furniture as been added: {frozen}')
 
-
-
-        '''
-        Furniture.id = input("Enter the ID of the desired Furniture:\n")
-        print(f'The ID of the desired Furniture is: {Furniture.id}')
-        Project.items.append(Furniture.id)
-        '''
 
 class Proposal(Project):
     def __init__(self, id=None, description="Description", floor=None, number_of_rooms_to_fill=None,
@@ -227,48 +222,56 @@ class Proposal(Project):
 
     # Methods
     def modify_client_info(self):
-        newClient = Client()
-        modify = input('Enter the number of the variable in need of change:\n-(1)firstname\n-(2)lastname\n-(3)phone_number\n-(4)email\n-(5)id\n-(6)address\n-(7)type\n-(8)contract\n-(9)inquiry\n-(10)quote\n-(11)Project\n')
-        match modify:
-            case "1":
-                newFname = input('Enter new firstname:\n')
-                setattr(newClient, 'firstname', newFname)
-            case "2":
-                newLname = input('Enter new lastname:\n')
-                setattr(newClient, 'lastname', newLname)
-            case "3":
-                newPnum = input('Enter new phone_number:\n')
-                setattr(newClient, 'phone_number', newPnum)
-            case "4":
-                newEmail = input('Enter new email:\n')
-                setattr(newClient, 'email', newEmail)
-            case "5":
-                newID = input('Enter new id:\n')
-                setattr(newClient, 'id', newID)
-            case "6":
-                newAddress = input('Enter new address:\n')
-                setattr(newClient, 'address', newAddress)
-            case "7":
-                newtype = input('Enter new type:\n')
-                setattr(newClient, 'type', newtype)
-            case "8":
-                newContract = input('Enter new contract:\n')
-                setattr(newClient, 'contract', newContract)
+        # newClient = Client()
+        clientID = input('Enter the Client ID:\n')
+        with open('clients.json', 'r+') as file:
+            client = json.load(file)
+        for id in client 
+            client = {}
+            modify = input(
+                'Enter the number of the variable in need of change:\n-(1)firstname\n-(2)lastname\n-(3)phone_number\n-(4)email\n-(5)id\n-(6)address\n-(7)type\n-(8)contract\n-(9)inquiry\n-(10)quote\n-(11)Project\n')
+            match modify:
+                case "1":
+                    newFname = input('Enter new firstname:\n')
+                    client['firstname'] = newFname
+                case "2":
+                    newLname = input('Enter new lastname:\n')
+                    client['lastname'] = newLname
+                case "3":
+                    newPnum = input('Enter new phone_number:\n')
+                    client['phone_number'] = newPnum
+                case "4":
+                    newEmail = input('Enter new email:\n')
+                    client['email'] = newEmail
+                case "5":
+                    newID = input('Enter new id:\n')
+                    client['id'] = newID
+                case "6":
+                    newAddress = input('Enter new address:\n')
+                    client['address'] = newAddress
+                case "7":
+                    newtype = input('Enter new type:\n')
+                    client['type'] = newtype
+                case "8":
+                    newContract = input('Enter new contract:\n')
+                    client['contract'] = newContract
+                case "9":
+                    newInquiry = input('Enter new inquiry:\n')
+                    client['inquiry'] = newInquiry
+                case "10":
+                    newQuote = input('Enter new quote:\n')
+                    client['quote'] = newQuote
+                case "11":
+                    newProject = input('Enter new project:\n')
+                    client['project'] = newProject
+                case _:
+                    print("Exiting the software. Have a nice day!")
 
-            case "9":
-                newInquiry = input('Enter new inquiry:\n')
-                setattr(newClient, 'inquiry', newInquiry)
-            case "10":
-                newQuote = input('Enter new quote:\n')
-                setattr(newClient, 'quote', newQuote)
-            case "11":
-                newProject = input('Enter new project:\n')
-                setattr(newClient, 'project', newProject)
-            case _:
-                print("Exiting the software. Have a nice day!")
+                # f.seek(0)
 
-        print(MyEncoder().encode(newClient))
-        print(newClient)
+            json.dump(client, file)
+
+    # f.close()
 
 
 class Inquiry(Project):
@@ -285,33 +288,63 @@ class Inquiry(Project):
 
     # Methods
     def create_profile(self):
-        newClient = Client()
-
+        clients = [
+            {
+                "firstname": "",
+                "lastname": "",
+                "phone_number": "",
+                "email": "",
+                "id": "",
+                "address": "",
+                "type": "",
+                "contract": "",
+                "inquiry": "",
+                "quote": "",
+                "Project": "",
+            }
+        ]
+        client = {}
         newFname = input('Enter new firstname:\n')
-        setattr(newClient, 'firstname', newFname)
         newLname = input('Enter new lastname:\n')
-        setattr(newClient, 'lastname', newLname)
         newPnum = input('Enter new phone_number:\n')
-        setattr(newClient, 'phone_number', newPnum)
         newEmail = input('Enter new email:\n')
-        setattr(newClient, 'email', newEmail)
         newID = input('Enter new id:\n')
-        setattr(newClient, 'id', newID)
         newAddress = input('Enter new address:\n')
-        setattr(newClient, 'address', newAddress)
         newtype = input('Enter new type:\n')
-        setattr(newClient, 'type', newtype)
         newContract = input('Enter new contract:\n')
-        setattr(newClient, 'contract', newContract)
         newInquiry = input('Enter new inquiry:\n')
-        setattr(newClient, 'inquiry', newInquiry)
         newQuote = input('Enter new quote:\n')
-        setattr(newClient, 'quote', newQuote)
         newProject = input('Enter new project:\n')
-        setattr(newClient, 'project', newProject)
+        for client in clients:
+            client['firstname'] = newFname
+            client['lastname'] = newLname
+            client['phone_number'] = newPnum
+            client['email'] = newEmail
+            client['id'] = newID
+            client['address'] = newAddress
+            client['type'] = newtype
+            client['contract'] = newContract
+            client['inquiry'] = newInquiry
+            client['quote'] = newQuote
+            client['project'] = newProject
 
-        print(MyEncoder().encode(newClient))
-        print(newClient)
+        clients = [{'id': newID,
+                    'firstname': newFname,
+                    'lastname': newLname,
+                    'phone_number': newPnum,
+                    'email': newEmail,
+                    'address': newAddress,
+                    'type': newtype,
+                    'contract': newContract,
+                    'inquiry': newInquiry,
+                    'quote': newQuote,
+                    'project': newProject}]
+
+        print(clients)
+        newclient = json.dumps(clients)
+        file = open('clients.json', 'a')
+        file.write('\n' + newclient)
+        file.close()
 
 
 class Furniture:
@@ -326,9 +359,12 @@ class Furniture:
 
 # Main function
 def main():
-    # obj = Inquiry()
-    # obj1 = Client()
-    # obj1.generate_inquiry()
+    '''
+    frozen = jsonpickle.encode(addFurniture)
+    with open('furniture.json', 'w') as outfile:
+        json.dump(frozen, outfile)
+    print(f'This furniture as been added: {frozen}')
+    '''
 
     print("Welcome to Unique Home Solution!")
     role = input("Please enter your role below - Client (1) or Employee (2):\n")
