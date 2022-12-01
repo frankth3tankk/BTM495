@@ -79,13 +79,11 @@ class Contract(Client):
 
     # Methods
     def send_contract(self):
-        contractID = input("Enter the desired contract to be sent to the client:\n")
-        Client.contract = input("Enter the desired Client ID\n")
-        print(f'This contract {contractID} will be sent to the client {Client.contract}')
-        if hasattr(Client, "_contract"):
-            contractID = self.id = Client.contract
+        project = input("Enter the ID of the desired quote:\n")
+        if hasattr(Contract, '_id'):
+            Project(contract=project)
         else:
-            Client.contract = Client()
+            print('Desired quote does not exist\n')
 
     def add_stage_date(self):
         dates = input("Enter desired stage_dates:\n")
@@ -113,7 +111,7 @@ class Quote:
             print('Desired quote does not exist\n')
 
     def add_project(self):
-        newProj = input("Enter the ID of the desired Quote:\n")
+        newProj = input("Enter the ID of the desired quote:\n")
         if hasattr(Project, '_id'):
             Quote(project=newProj)
         else:
