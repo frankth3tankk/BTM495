@@ -1,1 +1,3 @@
 [{"id": "1", "firstname": "jane", "lastname": "doe", "phone_number": "514", "email": "janedoe@gmail.com", "address": "123st", "type": "c", "contract": "1", "inquiry": "1", "quote": "1", "project": "1"}]
+
+[{"id": "1", "firstname": "jane", "lastname": "doe", "phone_number": "514", "email": "jane@gmail.com", "address": "123", "type": "c", "contract": "1", "inquiry": "1", "quote": "1", "project": "1"}]

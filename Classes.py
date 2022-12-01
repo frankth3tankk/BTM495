@@ -106,21 +106,18 @@ class Quote:
 
     # Methods
     def send_quote(self):
-        quoteId = input("Enter the quote ID to send to the contract:\n")
-        Contract.quote = input("Enter the desired Contract ID\n")
-        print(f'This quote {quoteId} will be sent to the contract {Contract.quote}')
-        if hasattr(Contract, "_quote"):
-            quoteId = self.id = Contract.quote
+        newQuote = input("Enter the ID of the desired contract:\n")
+        if hasattr(Quote, '_id'):
+            Contract(quote=newQuote)
         else:
-            Contract.quote = Contract()
+            print('Desired quote does not exist\n')
 
     def add_project(self):
-        addproject = input("Enter desired project ID to add to this quote:\n")
-        print(f'This project has been added to this quote: {addproject}')
+        newProj = input("Enter the ID of the desired Quote:\n")
         if hasattr(Project, '_id'):
-            addproject = self.project = Project.id
+            Quote(project=newProj)
         else:
-            addproject = Project(addproject)
+            print('Desired quote does not exist\n')
 
 
 class Project:
@@ -145,66 +142,91 @@ class Project:
 
     # Methods
     def change_furniture_reserved(self):
-        date = input("Enter reserved date if the furniture:\n")
-        print(f'The reserved date of this furniture is: {date}')
-        date.append(Furniture.reserved_date)
+        furniture = []
+        with open('furniture.json', 'r+') as file:
+            furniture = json.load(file)
+            date = input('Enter the dates ID:\n')
+            furniture[0]["stage_dates"] = date
+            json.dump(furniture, file)
+            print(furniture)
+        '''for i in furniture:
+            print(i)
+            i = input('Enter the furniture ID:\n')
+            iD = furniture[0]['id']
+            if i == iD:
+                dates = furniture['dates']
+                print(dates)
+'''
+
+
 
     def add_quote(self):
         newQuote = input("Enter the ID of the desired Quote:\n")
-        print(f'The ID of the desired Quote is: {newQuote}')
         if hasattr(Quote, '_id'):
-            newQuote = Quote.id = self.quote
+            Project(quote=newQuote)
         else:
-            newQuote = Quote(newQuote)
-
-        # if hasattr(Quote, "_id"):
-        #    return Quote._id
+            print('Desired quote does not exist\n')
 
     def add_contract(self):
-        newContract = input("Enter the ID of the desired Contract:\n")
-        print(f'The ID of the desired Contract is: {newContract}')
+        newContract = input("Enter the ID of the desired contract:\n")
         if hasattr(Contract, '_id'):
-            newContract = Contract.id = self.contract
+            Project(contract=newContract)
         else:
-            newContract = Contract(newContract)
+            print('Desired quote does not exist\n')
 
     def add_furniture(self):
-        addFurniture = Project()
+        furnitures = {}
         newID = input('Enter new id:\n')
-        setattr(self, 'id', newID)
         newdd = input('Enter new design_details:\n')
-        setattr(self, 'design_details', newdd)
         newds = input('Enter new design_sketch:\n')
-        setattr(self, 'design_sketch', newds)
         newd = input('Enter new description:\n')
-        setattr(self, 'description', newd)
         news = input('Enter new status:\n')
-        setattr(self, 'status', news)
         newf = input('Enter new feasibility:\n')
-        setattr(self, 'feasibility', newf)
         newp = input('Enter new progress:\n')
-        setattr(self, 'progress', newp)
         newr = input('Enter new requirements:\n')
-        setattr(self, 'requirements', newr)
-        newsd = input('Enter new inquiry:\n')
-        addFurniture.stage_dates.append(newsd)
+        newsd = input('Enter new stage_dates:\n')
         newi = input('Enter new items:\n')
-        addFurniture.items.append(newi)
         newc = input('Enter new client:\n')
-        setattr(self, 'client', newc)
         newp = input('Enter new proposal:\n')
-        setattr(self, 'proposal', newp)
         newQuote = input('Enter new quote:\n')
-        setattr(self, 'quote', newQuote)
         newContract = input('Enter new contract:\n')
-        setattr(self, 'contract', newContract)
         newfur = input('Enter new furniture:\n')
-        setattr(self, 'furniture', newfur)
+        for furniture in furnitures:
+            furniture['id'] = newID
+            furniture['design_details'] = newdd
+            furniture['design_sketch'] = newds
+            furniture['description'] = newd
+            furniture['status'] = news
+            furniture['feasibility'] = newf
+            furniture['progress'] = newp
+            furniture['requirements'] = newr
+            furniture['stage_dates'] = newi
+            furniture['client'] = newc
+            furniture['quote'] = newp
+            furniture['contract'] = newQuote
+            furniture['inquiry'] = newContract
+            furniture['furniture'] = newfur
 
-        frozen = jsonpickle.encode(addFurniture)
-        with open('furniture.json', 'w') as outfile:
-            json.dump(frozen, outfile)
-        print(f'This furniture as been added: {frozen}')
+        furnitures = [{'id': newID,
+                       'design_details': newdd,
+                       'design_sketch': newds,
+                       'description': newd,
+                       'status': news,
+                       'feasibility': newf,
+                       'progress': newp,
+                       'requirements': newr,
+                       'stage_dates': newi,
+                       'client': newc,
+                       'quote': newp,
+                       'contract': newQuote,
+                       'inquiry': newContract,
+                       'furniture': newfur}]
+
+        print(furnitures)
+        newfurniture = json.dumps(furnitures)
+        file = open('furniture.json', 'a')
+        file.write('\n' + newfurniture)
+        file.close()
 
 
 class Proposal(Project):
@@ -223,53 +245,56 @@ class Proposal(Project):
     # Methods
     def modify_client_info(self):
         # newClient = Client()
-        clientID = input('Enter the Client ID:\n')
         with open('clients.json', 'r+') as file:
             client = json.load(file)
-        for id in client 
-            client = {}
-            modify = input(
-                'Enter the number of the variable in need of change:\n-(1)firstname\n-(2)lastname\n-(3)phone_number\n-(4)email\n-(5)id\n-(6)address\n-(7)type\n-(8)contract\n-(9)inquiry\n-(10)quote\n-(11)Project\n')
-            match modify:
-                case "1":
-                    newFname = input('Enter new firstname:\n')
-                    client['firstname'] = newFname
-                case "2":
-                    newLname = input('Enter new lastname:\n')
-                    client['lastname'] = newLname
-                case "3":
-                    newPnum = input('Enter new phone_number:\n')
-                    client['phone_number'] = newPnum
-                case "4":
-                    newEmail = input('Enter new email:\n')
-                    client['email'] = newEmail
-                case "5":
-                    newID = input('Enter new id:\n')
-                    client['id'] = newID
-                case "6":
-                    newAddress = input('Enter new address:\n')
-                    client['address'] = newAddress
-                case "7":
-                    newtype = input('Enter new type:\n')
-                    client['type'] = newtype
-                case "8":
-                    newContract = input('Enter new contract:\n')
-                    client['contract'] = newContract
-                case "9":
-                    newInquiry = input('Enter new inquiry:\n')
-                    client['inquiry'] = newInquiry
-                case "10":
-                    newQuote = input('Enter new quote:\n')
-                    client['quote'] = newQuote
-                case "11":
-                    newProject = input('Enter new project:\n')
-                    client['project'] = newProject
-                case _:
-                    print("Exiting the software. Have a nice day!")
+        for x in client:
+            print(x)
+            i = input('Enter the Client ID:\n')
+            iD = client[0]['id']
+            if i == iD:
+                client = {}
+                modify = input(
+                    'Enter the number of the variable in need of change:\n-(1)firstname\n-(2)lastname\n-(3)phone_number\n-(4)email\n-(5)id\n-(6)address\n-(7)type\n-(8)contract\n-(9)inquiry\n-(10)quote\n-(11)Project\n')
+                match modify:
+                    case "1":
+                        newFname = input('Enter new firstname:\n')
+                        client['firstname'] = newFname
+                    case "2":
+                        newLname = input('Enter new lastname:\n')
+                        client['lastname'] = newLname
+                    case "3":
+                        newPnum = input('Enter new phone_number:\n')
+                        client['phone_number'] = newPnum
+                    case "4":
+                        newEmail = input('Enter new email:\n')
+                        client['email'] = newEmail
+                    case "5":
+                        newID = input('Enter new id:\n')
+                        client['id'] = newID
 
-                # f.seek(0)
+                    case "6":
+                        newAddress = input('Enter new address:\n')
+                        client['address'] = newAddress
+                    case "7":
+                        newtype = input('Enter new type:\n')
+                        client['type'] = newtype
+                    case "8":
+                        newContract = input('Enter new contract:\n')
+                        client['contract'] = newContract
+                    case "9":
+                        newInquiry = input('Enter new inquiry:\n')
+                        client['inquiry'] = newInquiry
+                    case "10":
+                        newQuote = input('Enter new quote:\n')
+                        client['quote'] = newQuote
+                    case "11":
+                        newProject = input('Enter new project:\n')
+                        client['project'] = newProject
+                    case _:
+                        print("Exiting the software. Have a nice day!")
 
-            json.dump(client, file)
+            print(client)
+            # json.dump(client, file)
 
     # f.close()
 
@@ -288,22 +313,7 @@ class Inquiry(Project):
 
     # Methods
     def create_profile(self):
-        clients = [
-            {
-                "firstname": "",
-                "lastname": "",
-                "phone_number": "",
-                "email": "",
-                "id": "",
-                "address": "",
-                "type": "",
-                "contract": "",
-                "inquiry": "",
-                "quote": "",
-                "Project": "",
-            }
-        ]
-        client = {}
+        clients = {}
         newFname = input('Enter new firstname:\n')
         newLname = input('Enter new lastname:\n')
         newPnum = input('Enter new phone_number:\n')
@@ -359,13 +369,6 @@ class Furniture:
 
 # Main function
 def main():
-    '''
-    frozen = jsonpickle.encode(addFurniture)
-    with open('furniture.json', 'w') as outfile:
-        json.dump(frozen, outfile)
-    print(f'This furniture as been added: {frozen}')
-    '''
-
     print("Welcome to Unique Home Solution!")
     role = input("Please enter your role below - Client (1) or Employee (2):\n")
 
@@ -411,16 +414,20 @@ def main():
                 return
             case "5":
                 # Add Project to Quote
-                return
+                create = Quote()
+                create.add_project()
             case "6":
                 # Change Furniture Reserved
-                return
+                create = Project()
+                create.change_furniture_reserved()
             case "7":
                 # Add Quote to Project
-                return
+                create = Project()
+                create.add_quote()
             case "8":
                 # Add Contract to Project
-                return
+                create = Project()
+                create.add_contract()
             case "9":
                 # Add Furniture to the list
                 create = Project()
