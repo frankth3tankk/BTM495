@@ -409,7 +409,8 @@ def main():
                 create.modify_client_info()
             case "4":
                 # Send Quote to Contract
-                return
+                create = Quote()
+                create.send_quote()
             case "5":
                 # Add Project to Quote
                 create = Quote()
